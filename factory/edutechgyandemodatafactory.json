@@ -1,0 +1,9 @@
+{
+	"name": "edutechgyandemodatafactory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "05f5f34f-fea0-4791-968c-647d8ae960dc",
+		"tenantId": "39e581de-00d3-47a1-aa11-9312995b8981"
+	}
+}

@@ -1,0 +1,23 @@
+{
+	"name": "Source_RestResource",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Rest_API_Service_ls_Connect",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"pDataSetParameters": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": {
+				"value": "@dataset().pDataSetParameters",
+				"type": "Expression"
+			}
+		},
+		"schema": []
+	}
+}

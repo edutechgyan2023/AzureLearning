@@ -1,6 +1,147 @@
 {
 	"name": "pl_Rest_API",
 	"properties": {
+		"activities": [
+			{
+				"name": "Copy Rest API Response to SQL Table",
+				"description": "Copy Rest API Response to SQL Database Table",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['id']"
+								},
+								"sink": {
+									"name": "id",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['imageUrl']"
+								},
+								"sink": {
+									"name": "imageUrl",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['firstName']"
+								},
+								"sink": {
+									"name": "firstName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['lastName']"
+								},
+								"sink": {
+									"name": "lastName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['email']"
+								},
+								"sink": {
+									"name": "email",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['contactNumber']"
+								},
+								"sink": {
+									"name": "contactNumber",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['age']"
+								},
+								"sink": {
+									"name": "age",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['dob']"
+								},
+								"sink": {
+									"name": "dob",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['salary']"
+								},
+								"sink": {
+									"name": "salary",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['address']"
+								},
+								"sink": {
+									"name": "address",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Source_RestResource",
+						"type": "DatasetReference",
+						"parameters": {
+							"pDataSetParameters": "?noofRecords=10&idStarts=1001"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Sink_SQL_Table",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
 		"annotations": []
 	}
 }

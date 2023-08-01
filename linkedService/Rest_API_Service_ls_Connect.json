@@ -5,7 +5,7 @@
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
-			"url": "https://hub.dummyapis.com/employee?",
+			"url": "https://hub.dummyapis.com/employee",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}

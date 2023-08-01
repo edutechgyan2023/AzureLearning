@@ -7,9 +7,13 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "edutechgyandemodatafactory"
 		},
-		"AzureBlobStorage2_connectionString": {
+		"AzureSqlDatabase_ls_Connect_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase_ls_Connect'"
+		},
+		"Rest_API_Service_ls_Connect_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://hub.dummyapis.com/employee"
 		}
 	},
 	"variables": {
@@ -17,19 +21,273 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase_ls_Connect')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase_ls_Connect_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Rest_API_Service_ls_Connect')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "REST API Service Connect",
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('Rest_API_Service_ls_Connect_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sink_SQL_Table')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_ls_Connect",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "imageUrl",
+						"type": "nvarchar"
+					},
+					{
+						"name": "firstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "lastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "email",
+						"type": "nvarchar"
+					},
+					{
+						"name": "contactNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "age",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "dob",
+						"type": "nvarchar"
+					},
+					{
+						"name": "salary",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "address",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Employee"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_ls_Connect')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Source_RestResource')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Rest_API_Service_ls_Connect",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"pDataSetParameters": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": {
+						"value": "@dataset().pDataSetParameters",
+						"type": "Expression"
+					}
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Rest_API_Service_ls_Connect')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_Rest_API')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Wait1",
-						"type": "Wait",
+						"name": "Copy Rest API Response to SQL Table",
+						"description": "Copy Rest API Response to SQL Database Table",
+						"type": "Copy",
 						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
 						"userProperties": [],
 						"typeProperties": {
-							"waitTimeInSeconds": 1
-						}
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['id']"
+										},
+										"sink": {
+											"name": "id",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"path": "$['imageUrl']"
+										},
+										"sink": {
+											"name": "imageUrl",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['firstName']"
+										},
+										"sink": {
+											"name": "firstName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['lastName']"
+										},
+										"sink": {
+											"name": "lastName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['email']"
+										},
+										"sink": {
+											"name": "email",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['contactNumber']"
+										},
+										"sink": {
+											"name": "contactNumber",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['age']"
+										},
+										"sink": {
+											"name": "age",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"path": "$['dob']"
+										},
+										"sink": {
+											"name": "dob",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['salary']"
+										},
+										"sink": {
+											"name": "salary",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['address']"
+										},
+										"sink": {
+											"name": "address",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Source_RestResource",
+								"type": "DatasetReference",
+								"parameters": {
+									"pDataSetParameters": "?noofRecords=10&idStarts=1001"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Sink_SQL_Table",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -38,20 +296,10 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureBlobStorage2_connectionString')]"
-				}
-			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Source_RestResource')]",
+				"[concat(variables('factoryId'), '/datasets/Sink_SQL_Table')]"
+			]
 		}
 	]
 }

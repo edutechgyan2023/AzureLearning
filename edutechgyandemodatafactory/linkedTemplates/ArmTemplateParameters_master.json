@@ -5,8 +5,11 @@
 		"factoryName": {
 			"value": "edutechgyandemodatafactory"
 		},
-		"AzureBlobStorage2_connectionString": {
+		"AzureSqlDatabase_ls_Connect_connectionString": {
 			"value": ""
+		},
+		"Rest_API_Service_ls_Connect_properties_typeProperties_url": {
+			"value": "https://hub.dummyapis.com/employee"
 		},
 		"containerUri": {
 			"value": ""

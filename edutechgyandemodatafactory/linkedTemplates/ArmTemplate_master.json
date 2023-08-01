@@ -7,9 +7,13 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "edutechgyandemodatafactory"
 		},
-		"AzureBlobStorage2_connectionString": {
+		"AzureSqlDatabase_ls_Connect_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase_ls_Connect'"
+		},
+		"Rest_API_Service_ls_Connect_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://hub.dummyapis.com/employee"
 		},
 		"containerUri": {
 			"type": "string",
@@ -38,8 +42,11 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"AzureBlobStorage2_connectionString": {
-						"value": "[parameters('AzureBlobStorage2_connectionString')]"
+					"AzureSqlDatabase_ls_Connect_connectionString": {
+						"value": "[parameters('AzureSqlDatabase_ls_Connect_connectionString')]"
+					},
+					"Rest_API_Service_ls_Connect_properties_typeProperties_url": {
+						"value": "[parameters('Rest_API_Service_ls_Connect_properties_typeProperties_url')]"
 					}
 				}
 			},

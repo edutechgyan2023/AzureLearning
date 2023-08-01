@@ -7,10 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "edutechgyandemodatafactory"
 		},
-		"AzureBlobStorage1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
-		},
 		"AzureBlobStorage2_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
@@ -41,112 +37,6 @@
 					"cancelAfter": {}
 				},
 				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage2",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Discrepancy_07-26-2023_04-57-PM.csv",
-						"container": "download"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Discrepancy_Type",
-						"type": "String"
-					},
-					{
-						"name": "Location_ID",
-						"type": "String"
-					},
-					{
-						"name": "Location_Name",
-						"type": "String"
-					},
-					{
-						"name": "BY_Shift_ID",
-						"type": "String"
-					},
-					{
-						"name": "WJ_Shift_ID",
-						"type": "String"
-					},
-					{
-						"name": "BY_Shift_Start_Date_Time",
-						"type": "String"
-					},
-					{
-						"name": "WJ_Shift_Start_Date_Time",
-						"type": "String"
-					},
-					{
-						"name": "BY_Shift_End_Date_Time",
-						"type": "String"
-					},
-					{
-						"name": "WJ_Shift_End_Date_Time",
-						"type": "String"
-					},
-					{
-						"name": "BY_Action",
-						"type": "String"
-					},
-					{
-						"name": "WJ_Action",
-						"type": "String"
-					},
-					{
-						"name": "BY_Position_Name",
-						"type": "String"
-					},
-					{
-						"name": "WJ_Position_Name",
-						"type": "String"
-					},
-					{
-						"name": "Resolved_Flag",
-						"type": "String"
-					},
-					{
-						"name": "Trigger_Date",
-						"type": "String"
-					},
-					{
-						"name": "Modified_Date",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
-				}
 			},
 			"dependsOn": []
 		},

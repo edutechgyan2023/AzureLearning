@@ -1,0 +1,13 @@
+{
+	"name": "Rest_API_Service_ls_Connect",
+	"properties": {
+		"description": "REST API Service Connect",
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://hub.dummyapis.com/employee?",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}

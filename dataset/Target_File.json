@@ -1,0 +1,24 @@
+{
+	"name": "Target_File",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "StorageAccount_ls_Connect",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "output.txt",
+				"folderPath": "Output",
+				"container": "download"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

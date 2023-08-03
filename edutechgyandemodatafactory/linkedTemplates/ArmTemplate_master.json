@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase_ls_Connect'"
 		},
+		"StorageAccount_ls_Connect_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'StorageAccount_ls_Connect'"
+		},
 		"Rest_API_Service_ls_Connect_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://hub.dummyapis.com/employee"
@@ -44,6 +48,9 @@
 					},
 					"AzureSqlDatabase_ls_Connect_connectionString": {
 						"value": "[parameters('AzureSqlDatabase_ls_Connect_connectionString')]"
+					},
+					"StorageAccount_ls_Connect_connectionString": {
+						"value": "[parameters('StorageAccount_ls_Connect_connectionString')]"
 					},
 					"Rest_API_Service_ls_Connect_properties_typeProperties_url": {
 						"value": "[parameters('Rest_API_Service_ls_Connect_properties_typeProperties_url')]"

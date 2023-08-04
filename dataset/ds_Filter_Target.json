@@ -1,5 +1,5 @@
 {
-	"name": "Target_File",
+	"name": "ds_Filter_Target",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "StorageAccount_ls_Connect",

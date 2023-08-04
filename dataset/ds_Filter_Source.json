@@ -1,5 +1,5 @@
 {
-	"name": "Target_File",
+	"name": "ds_Filter_Source",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "StorageAccount_ls_Connect",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "Output",
+				"folderPath": "Input",
 				"container": "download"
 			},
 			"columnDelimiter": ",",

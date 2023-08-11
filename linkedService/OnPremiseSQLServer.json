@@ -1,0 +1,16 @@
+{
+	"name": "OnPremiseSQLServer",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=False;data source=AJIT-LAPTOP;initial catalog=PremiseDB;user id=sa",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJhYTVjMDA3My0yNmQzLTQ1OTYtYTdhOC01NGEwMDExMGExNDciLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "On-PremiseIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

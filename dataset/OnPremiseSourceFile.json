@@ -1,0 +1,35 @@
+{
+	"name": "OnPremiseSourceFile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OnPremiseFileServer",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": "Employee-01.txt"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Id",
+				"type": "String"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			},
+			{
+				"name": "FileName",
+				"type": "String"
+			}
+		]
+	}
+}

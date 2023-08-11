@@ -1,0 +1,23 @@
+{
+	"name": "TargetDataSet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_ls_Connect",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "Output",
+				"container": "download"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

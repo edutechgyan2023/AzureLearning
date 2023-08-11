@@ -1,5 +1,5 @@
 {
-	"name": "TargetDataset",
+	"name": "TargetDataSet",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage_ls_Connect",
@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Emplyee.csv",
 				"folderPath": "Output",
 				"container": "download"
 			},
